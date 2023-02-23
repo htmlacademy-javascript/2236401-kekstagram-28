@@ -41,16 +41,12 @@ returnNumber('33 коровы и 2 кота');
 
 // Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами — и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки. Если исходная строка превышает заданную длину, она не должна обрезаться. Если «добивка» слишком длинная, она обрезается с конца.
 
-const getString = (string, length, additionalСharacter) => {
-  let i = 0;
-  let newString = '';
-
-  while (length >= string.length + newString.length) {
-
-    newString += additionalСharacter.at(i);
-    i = i + 1 < additionalСharacter.length ? i + 1 : 0;
-  }
-  return newString + string;
+const getString = (string, minLength, additionalСharacter) => {
+  const actualString = minLength - string.length;
+  return actualString <= 0 ? string :
+    additionalСharacter.slice(0, actualString % additionalСharacter.length)
+  + additionalСharacter.repeat(actualString / additionalСharacter.length)
+  + string;
 };
 
-getString('shine', 5, 'sun');
+getString('shine', 9, 'sun');
