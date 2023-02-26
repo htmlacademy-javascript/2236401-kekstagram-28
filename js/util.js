@@ -2,7 +2,6 @@
 
 const checkLength = (string, number) => string.length <= number;
 
-checkLength('everything is perfect!', 23);
 
 // Функция для проверки, является ли строка палиндромом.
 
@@ -15,8 +14,6 @@ const checkPolydrome = (string) => {
 
   return string === newString;
 };
-
-checkPolydrome('Лёша на полке клопа нашёл ');
 
 
 // Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9 и возвращает их в виде целого положительного числа. Если в строке нет ни одной цифры, функция должна вернуть NaN:
@@ -36,8 +33,6 @@ const returnNumber = (string) => {
   return newString;
 };
 
-returnNumber('33 коровы и 2 кота');
-
 
 // Функция, которая принимает три параметра: исходную строку, минимальную длину и строку с добавочными символами — и возвращает исходную строку, дополненную указанными символами до заданной длины. Символы добавляются в начало строки. Если исходная строка превышает заданную длину, она не должна обрезаться. Если «добивка» слишком длинная, она обрезается с конца.
 
@@ -49,4 +44,42 @@ const getString = (string, minLength, additionalСharacter) => {
   + string;
 };
 
-getString('shine', 9, 'sun');
+// Функции для поиска случайного числа из диапазона
+
+const getRandomInteger = (min, max) => {
+  const lower = Math.ceil(Math.min(min, max));
+  const upper = Math.floor(Math.max(min, max));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+const createRandomIdFromRangeGenerator = (min, max) => {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
+
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const getRandomNumber = (min, max) => getRandomInteger(min, max);
+
+
+export {
+  checkLength,
+  checkPolydrome,
+  returnNumber,
+  getString,
+  getRandomInteger,
+  createRandomIdFromRangeGenerator,
+  getRandomArrayElement,
+  getRandomNumber,
+};
