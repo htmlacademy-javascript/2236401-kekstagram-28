@@ -1,6 +1,6 @@
 const pictureContainer = document.querySelector('.pictures');
-
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const pictureListFragment = document.createDocumentFragment();
 
 const generatePicture = (photo) => {
   const pictureElement = pictureTemplate.cloneNode(true);
@@ -11,7 +11,8 @@ const generatePicture = (photo) => {
 };
 
 const randomPicture = (pictures) => {
-  pictures.forEach((photo) => pictureContainer.append(generatePicture(photo)));
+  pictures.forEach((photo) =>
+    pictureListFragment.append(generatePicture(photo)));pictureContainer.append(pictureListFragment);
 };
 
 export {randomPicture};
