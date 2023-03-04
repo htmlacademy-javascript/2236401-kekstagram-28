@@ -1,5 +1,6 @@
-import {SIMILAR_PHOTOS_COUNT} from './constants.js';
+import {randomPicture} from './miniature.js';
 import {similarPhotos} from './data.js';
+import {SIMILAR_PHOTOS_COUNT} from './constants.js';
 
-// eslint-disable-next-line no-console
-console.log(similarPhotos(SIMILAR_PHOTOS_COUNT));
+const pictures = similarPhotos(SIMILAR_PHOTOS_COUNT);
+randomPicture(pictures);
