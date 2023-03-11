@@ -72,6 +72,10 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 const getRandomNumber = (min, max) => getRandomInteger(min, max);
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const isEnterKey = (evt) => evt.key === 'Enter';
+
 
 export {
   checkLength,
@@ -82,4 +86,9 @@ export {
   createRandomIdFromRangeGenerator,
   getRandomArrayElement,
   getRandomNumber,
+  isEscapeKey,
+  isEnterKey,
 };
+
+//eslint-disable-next-line no-console
+console.log('Hello');
