@@ -1,5 +1,6 @@
 
 import {isEscapeKey} from './util.js';
+import {COMMENTS_STEP} from './constants.js';
 
 const bigPictureContainer = document.querySelector('.big-picture');
 const pictureImage = bigPictureContainer.querySelector('.big-picture__img img');
@@ -14,9 +15,16 @@ const commentItem = bigPictureContainer.querySelector('.social__comment');
 const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
 let commentsSet = [];
+let numberOfComments = 0;
 
 const onCloseButtonClick = () => {
   closeBigPicture();
+};
+
+const onBackBigPictureClick = (evt) => {
+  if (evt.target === bigPictureContainer) {
+    closeBigPicture();
+  }
 };
 
 const onDocumentKeydown = (evt) => {
@@ -25,44 +33,61 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onCommentsLoaderClick = () => {
+  userComments();
+
+  if (numberOfComments === Number(commentsCount.textContent)) {
+    commentsLoader.classList.add('hidden');
+  }
+};
+
 const createListeners = () => {
   pictureCloseButton.addEventListener('click', onCloseButtonClick);
   document.addEventListener('keydown', onDocumentKeydown);
+  commentsLoader.addEventListener('click', onCommentsLoaderClick);
+  bigPictureContainer.addEventListener('click', onBackBigPictureClick);
 };
 
 const removeListeners = () => {
   pictureCloseButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
+  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
+  bigPictureContainer.removeEventListener('click', onBackBigPictureClick);
 };
 
-const createComment = (data) => {
+const createComment = ({avatar, name, message}) => {
   const newComment = commentItem.cloneNode(true);
-  newComment.querySelector('.social__picture').src = data.avatar;
-  newComment.querySelector('.social__picture').alt = data.name;
-  newComment.querySelector('.social__text').textContent = data.message;
+  newComment.querySelector('.social__picture').src = avatar;
+  newComment.querySelector('.social__picture').alt = name;
+  newComment.querySelector('.social__text').textContent = message;
+  numberOfComments++;
 
   return newComment;
 };
 
 function userComments () {
-  commentsSet.slice().forEach((item) => commentsList.append(createComment(item)));
+  commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsList.append(createComment(item)));
+  commentsContainer.innerHTML = `${numberOfComments} из <span class="comments-count"> ${commentsCount.textContent} </span> комментариев`;
+  if (!Number(commentsCount.textContent)) {
+    commentsContainer.innerHTML = 'Ваш комментарий будет первым';
+  }
 }
 
-const fillBigPicture = (data) => {
-  pictureImage.src = data.url;
-  pictureLikesCount.textContent = data.likes;
-  commentsCount.textContent = data.comments.length;
-  pictureCaption.textContent = data.description;
+const fillBigPicture = ({url, likes, comments, description}) => {
+  pictureImage.src = url;
+  pictureLikesCount.textContent = likes;
+  commentsCount.textContent = comments.length;
+  pictureCaption.textContent = description;
+  if (Number(commentsCount.textContent) <= COMMENTS_STEP) {
+    commentsLoader.classList.add('hidden');
+  }
 };
 
 function openBigPicture (data) {
   bigPictureContainer.classList.remove('hidden');
-  commentsContainer.classList.add('hidden');
-  commentsLoader.classList.add('hidden');
   pictureCloseButton.focus();
   commentsList.innerHTML = '';
   commentsSet.push(...data.comments.slice());
-
   document.body.classList.add('modal-open');
 
   fillBigPicture(data);
@@ -75,7 +100,10 @@ function closeBigPicture () {
   document.body.classList.remove('modal-open');
   document.querySelector('.current-fullSize').focus();
   document.querySelector('.current-fullSize').classList.remove('current-fullSize');
+
   commentsSet = [];
+  numberOfComments = 0;
+  commentsLoader.classList.remove('hidden');
   removeListeners();
 }
 

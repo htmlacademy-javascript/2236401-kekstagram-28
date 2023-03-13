@@ -74,6 +74,8 @@ const AVATAR_URL_MAX = 6;
 const COMMENT_LIST_MIN = 0;
 const COMMENT_LIST_MAX = 20;
 
+const COMMENTS_STEP = 5;
+
 export {
   NAMES,
   DESCRIPTIONS,
@@ -91,4 +93,5 @@ export {
   AVATAR_URL_MAX,
   COMMENT_LIST_MIN,
   COMMENT_LIST_MAX,
+  COMMENTS_STEP,
 };
