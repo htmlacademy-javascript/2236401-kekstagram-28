@@ -1,4 +1,3 @@
-
 import {isEscapeKey} from './util.js';
 import {COMMENTS_STEP} from './constants.js';
 
@@ -14,7 +13,7 @@ const commentsList = bigPictureContainer.querySelector('.social__comments');
 const commentItem = bigPictureContainer.querySelector('.social__comment');
 const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 
-let commentsSet = [];
+const commentsSet = [];
 let numberOfComments = 0;
 
 const onCloseButtonClick = () => {
@@ -66,7 +65,9 @@ const createComment = ({avatar, name, message}) => {
 };
 
 function userComments () {
-  commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsList.append(createComment(item)));
+  const commentsFragment = document.createDocumentFragment();
+  commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsFragment.append(createComment(item)));
+  commentsList.append(commentsFragment);
   commentsContainer.innerHTML = `${numberOfComments} из <span class="comments-count"> ${commentsCount.textContent} </span> комментариев`;
   if (!Number(commentsCount.textContent)) {
     commentsContainer.innerHTML = 'Ваш комментарий будет первым';
@@ -101,7 +102,7 @@ function closeBigPicture () {
   document.querySelector('.current-fullSize').focus();
   document.querySelector('.current-fullSize').classList.remove('current-fullSize');
 
-  commentsSet = [];
+  commentsSet.length = 0;
   numberOfComments = 0;
   commentsLoader.classList.remove('hidden');
   removeListeners();
