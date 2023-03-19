@@ -5,4 +5,3 @@ import {SIMILAR_PHOTOS_COUNT} from './constants.js';
 const pictures = similarPhotos(SIMILAR_PHOTOS_COUNT);
 randomPicture(pictures);
 import './modalEditingForm.js';
-// import './validationForm.js';
