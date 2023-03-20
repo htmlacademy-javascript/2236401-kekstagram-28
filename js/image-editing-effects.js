@@ -1,4 +1,4 @@
-import {imageUploadPreview} from './imageEditingScale.js';
+import {imageUploadPreview} from './image-editing-scale.js';
 import {EFFECT_DEFAULT_VALUE} from './constants.js';
 
 const effectRangeContainer = document.querySelector('.img-upload__effect-level');

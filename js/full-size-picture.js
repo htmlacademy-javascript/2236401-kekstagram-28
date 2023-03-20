@@ -99,8 +99,8 @@ function openBigPicture (data) {
 function closeBigPicture () {
   bigPictureContainer.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  document.querySelector('.current-fullSize').focus();
-  document.querySelector('.current-fullSize').classList.remove('current-fullSize');
+  document.querySelector('.current-full-size').focus();
+  document.querySelector('.current-full-size').classList.remove('current-full-size');
 
   commentsSet.length = 0;
   numberOfComments = 0;

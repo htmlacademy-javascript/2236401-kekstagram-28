@@ -1,4 +1,4 @@
-import {openBigPicture} from './fullSizePicture.js';
+import {openBigPicture} from './full-size-picture.js';
 
 const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -12,7 +12,7 @@ const generatePicture = (photo) => {
   pictureElement.addEventListener('click', (evt) => {
     evt.preventDefault();
     openBigPicture(photo);
-    pictureElement.classList.add('current-fullSize');
+    pictureElement.classList.add('current-full-size');
   });
   return pictureElement;
 };

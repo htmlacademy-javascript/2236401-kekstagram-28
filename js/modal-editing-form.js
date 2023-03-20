@@ -1,18 +1,18 @@
 import {isEscapeKey} from './util.js';
-import {validateUploadImageForm} from './validationForm.js';
+import {validateUploadImageForm} from './validation-form.js';
 import {
   resetScaleValue,
   addListenersScaleValue,
   removeListenersScaleValue,
   scaleControlValue,
-} from './imageEditingScale.js';
+} from './image-editing-scale.js';
 import {DEFAULT_SCALE_VALUE} from './constants.js';
 import {
   createSlider,
   setupSlider,
   destroySlider,
   changeEffectInputClick,
-} from './imageEditingEffects.js';
+} from './image-editing-effects.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const uploadButton = imageUploadForm.querySelector('#upload-file');
