@@ -89,6 +89,78 @@ const SCALE_STEP = 25;
 
 const EFFECT_DEFAULT_VALUE = 100;
 
+const EffectSetups = {
+  CHROME: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    step: 0.1,
+    filter: 'grayscale',
+    unit: ''
+  },
+  SEPIA: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    step: 0.1,
+    filter: 'sepia',
+    unit: ''
+  },
+  MARVIN: {
+    range: {
+      min: 0,
+      max: 100
+    },
+    step: 1,
+    filter: 'invert',
+    unit: '%'
+  },
+  PHOBOS: {
+    range: {
+      min: 0,
+      max: 3
+    },
+    step: 0.1,
+    filter: 'blur',
+    unit: 'px'
+  },
+  HEAT: {
+    range: {
+      min: 1,
+      max: 3
+    },
+    step: 0.1,
+    filter: 'brightness',
+    unit: ''
+  }
+};
+
+
+const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+const Route = {
+  GET_DATA: '/data',
+  SEND_DATA: 'e/',
+};
+
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+};
+
+const ErrorText = {
+  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
+};
+
+
 export {
   NAMES,
   DESCRIPTIONS,
@@ -117,4 +189,10 @@ export {
   DEFAULT_SCALE_VALUE,
   SCALE_STEP,
   EFFECT_DEFAULT_VALUE,
+  EffectSetups,
+  BASE_URL,
+  Route,
+  Method,
+  ErrorText,
+  SubmitButtonText,
 };

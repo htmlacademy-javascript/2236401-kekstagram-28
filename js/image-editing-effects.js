@@ -1,5 +1,8 @@
-import {imageUploadPreview} from './imageEditingScale.js';
-import {EFFECT_DEFAULT_VALUE} from './constants.js';
+import {imageUploadPreview} from './image-editing-scale.js';
+import {
+  EFFECT_DEFAULT_VALUE,
+  EffectSetups,
+} from './constants.js';
 
 const effectRangeContainer = document.querySelector('.img-upload__effect-level');
 const effectValue = effectRangeContainer.querySelector('.effect-level__value');
@@ -15,54 +18,6 @@ const createSlider = () => {
     start: EFFECT_DEFAULT_VALUE,
     connect: 'lower',
   });
-};
-
-const effectSetups = {
-  CHROME: {
-    range: {
-      min: 0,
-      max: 1
-    },
-    step: 0.1,
-    filter: 'grayscale',
-    unit: ''
-  },
-  SEPIA: {
-    range: {
-      min: 0,
-      max: 1
-    },
-    step: 0.1,
-    filter: 'sepia',
-    unit: ''
-  },
-  MARVIN: {
-    range: {
-      min: 0,
-      max: 100
-    },
-    step: 1,
-    filter: 'invert',
-    unit: '%'
-  },
-  PHOBOS: {
-    range: {
-      min: 0,
-      max: 3
-    },
-    step: 0.1,
-    filter: 'blur',
-    unit: 'px'
-  },
-  HEAT: {
-    range: {
-      min: 1,
-      max: 3
-    },
-    step: 0.1,
-    filter: 'brightness',
-    unit: ''
-  }
 };
 
 const updateSlider = (effect) => {
@@ -83,10 +38,10 @@ const setupSlider = (effect) => {
     effectSlider.noUiSlider.off();
     effectRangeContainer.classList.add('hidden');
   } else {
-    updateSlider(effectSetups[effect.toUpperCase()]);
+    updateSlider(EffectSetups[effect.toUpperCase()]);
     effectSlider.noUiSlider.on('update', () => {
       effectValue.value = effectSlider.noUiSlider.get();
-      imageUploadPreview.style.filter = `${effectSetups[effect.toUpperCase()].filter}(${effectValue.value + effectSetups[effect.toUpperCase()].unit})`;
+      imageUploadPreview.style.filter = `${EffectSetups[effect.toUpperCase()].filter}(${effectValue.value + EffectSetups[effect.toUpperCase()].unit})`;
     });
     effectRangeContainer.classList.remove('hidden');
   }
@@ -109,4 +64,3 @@ export {
   changeEffectInputClick,
   destroySlider,
 };
-

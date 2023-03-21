@@ -1,18 +1,26 @@
 import {isEscapeKey} from './util.js';
-import {validateUploadImageForm} from './validationForm.js';
+import {validateUploadImageForm} from './validation-form.js';
 import {
   resetScaleValue,
   addListenersScaleValue,
   removeListenersScaleValue,
   scaleControlValue,
-} from './imageEditingScale.js';
-import {DEFAULT_SCALE_VALUE} from './constants.js';
+} from './image-editing-scale.js';
+import {
+  DEFAULT_SCALE_VALUE,
+  SubmitButtonText,
+} from './constants.js';
 import {
   createSlider,
   setupSlider,
   destroySlider,
   changeEffectInputClick,
-} from './imageEditingEffects.js';
+} from './image-editing-effects.js';
+import {
+  sendData,
+  showSuccessMessageUpload,
+  showErrorMessageUpload,
+} from './api.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const uploadButton = imageUploadForm.querySelector('#upload-file');
@@ -25,6 +33,38 @@ const effectsList = imageUploadForm.querySelector('.effects__list');
 const checkedEffectInput = imageUploadForm.querySelector('.effects__radio[checked]');
 
 const body = document.querySelector('body');
+
+const submitButton = document.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = () => {
+  imageUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = validateUploadImageForm();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          showSuccessMessageUpload();
+          closeUploadModalClickHandler();
+        })
+        .catch(() => {
+          showErrorMessageUpload();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 
 const onUploadImageFormSubmit = (evt) => {
   if (!validateUploadImageForm()) {
@@ -47,8 +87,7 @@ const removeListeners = () => {
 };
 
 function escCloseKeyHandler(evt) {
-  const inputFocus = evt.target.matches('input:focus') || evt.target.matches('textarea:focus');
-
+  const inputFocus = evt.target.classList.contains('text__hashtags') || evt.target.classList.contains('text__description');
   if (inputFocus) {
     return false;
   }
@@ -95,3 +134,5 @@ function closeUploadModalClickHandler() {
   removeListenersScaleValue();
   resetScaleValue();
 }
+
+export {setUserFormSubmit, closeUploadModalClickHandler, escCloseKeyHandler};
