@@ -6,7 +6,10 @@ import {
   removeListenersScaleValue,
   scaleControlValue,
 } from './image-editing-scale.js';
-import {DEFAULT_SCALE_VALUE} from './constants.js';
+import {
+  DEFAULT_SCALE_VALUE,
+  SubmitButtonText,
+} from './constants.js';
 import {
   createSlider,
   setupSlider,
@@ -32,10 +35,6 @@ const checkedEffectInput = imageUploadForm.querySelector('.effects__radio[checke
 const body = document.querySelector('body');
 
 const submitButton = document.querySelector('.img-upload__submit');
-const SubmitButtonText = {
-  IDLE: 'Сохранить',
-  SENDING: 'Сохраняю...'
-};
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -88,8 +87,7 @@ const removeListeners = () => {
 };
 
 function escCloseKeyHandler(evt) {
-  const inputFocus = evt.target.matches('input:focus') || evt.target.matches('textarea:focus');
-
+  const inputFocus = evt.target.classList.contains('text__hashtags') || evt.target.classList.contains('text__description');
   if (inputFocus) {
     return false;
   }
@@ -137,4 +135,4 @@ function closeUploadModalClickHandler() {
   resetScaleValue();
 }
 
-export {setUserFormSubmit, closeUploadModalClickHandler};
+export {setUserFormSubmit, closeUploadModalClickHandler, escCloseKeyHandler};

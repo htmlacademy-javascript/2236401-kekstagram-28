@@ -5,16 +5,17 @@ import {
   Method,
   ErrorText,
 } from './constants.js';
+import {escCloseKeyHandler} from './modal-editing-form.js';
 
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
 const showMessage = (message, button) => {
   document.body.append(message);
-
+  document.removeEventListener('keydown', escCloseKeyHandler);
   const closeMessage = () => {
     message.remove();
-    window.removeEventListener('keydown', onMessageEscDown);
+    document.removeEventListener('keydown', onMessageEscDown);
   };
 
   button.addEventListener('click', () => {
@@ -31,9 +32,10 @@ const showMessage = (message, button) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeMessage();
+      document.addEventListener('keydown', escCloseKeyHandler);
     }
   }
-  window.addEventListener('keydown', onMessageEscDown);
+  document.addEventListener('keydown', onMessageEscDown);
 };
 
 const showSuccessMessageUpload = () => {

@@ -140,9 +140,14 @@ const EffectSetups = {
 
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: '/',
+  SEND_DATA: 'e/',
 };
 
 const Method = {
@@ -189,4 +194,5 @@ export {
   Route,
   Method,
   ErrorText,
+  SubmitButtonText,
 };
