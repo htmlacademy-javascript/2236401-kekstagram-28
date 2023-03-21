@@ -147,7 +147,7 @@ const SubmitButtonText = {
 
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: 'e/',
+  SEND_DATA: '/',
 };
 
 const Method = {
