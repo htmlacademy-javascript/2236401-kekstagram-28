@@ -6,7 +6,7 @@ const checkLength = (string, number) => string.length <= number;
 // Функция для проверки, является ли строка палиндромом.
 
 const checkPolydrome = (string) => {
-  string = string.toLowerCase().replaceAll(' ', '');
+  string = string.toString().toLowerCase().replaceAll(' ', '');
   let newString = '';
   for (let i = string.length - 1; i >= 0; i--) {
     newString += string.at(i);

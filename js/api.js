@@ -1,4 +1,10 @@
 import {isEscapeKey} from './util.js';
+import {
+  BASE_URL,
+  Route,
+  Method,
+  ErrorText,
+} from './constants.js';
 
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
@@ -39,27 +45,9 @@ const showSuccessMessageUpload = () => {
 const showErrorMessageUpload = () => {
   const message = errorMessage.cloneNode(true);
   const button = message.querySelector('.error__button');
-
   showMessage(message, button);
 };
 
-
-const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
-
-const Route = {
-  GET_DATA: '/data',
-  SEND_DATA: '/',
-};
-
-const Method = {
-  GET: 'GET',
-  POST: 'POST',
-};
-
-const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
-  SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
-};
 
 const load = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, 'Content-Type': 'multipart/form-data', body})

@@ -85,7 +85,6 @@ const fillBigPicture = ({url, likes, comments, description}) => {
 };
 
 function openBigPicture (data) {
-  bigPictureContainer.classList.remove('hidden');
   pictureCloseButton.focus();
   commentsList.innerHTML = '';
   commentsSet.push(...data.comments.slice());
@@ -94,6 +93,7 @@ function openBigPicture (data) {
   fillBigPicture(data);
   userComments();
   createListeners();
+  bigPictureContainer.classList.remove('hidden');
 }
 
 function closeBigPicture () {
