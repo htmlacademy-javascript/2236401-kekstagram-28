@@ -17,7 +17,7 @@ const createSlider = () => {
   });
 };
 
-const effectSetups = {
+const EffectSetups = {
   CHROME: {
     range: {
       min: 0,
@@ -83,10 +83,10 @@ const setupSlider = (effect) => {
     effectSlider.noUiSlider.off();
     effectRangeContainer.classList.add('hidden');
   } else {
-    updateSlider(effectSetups[effect.toUpperCase()]);
+    updateSlider(EffectSetups[effect.toUpperCase()]);
     effectSlider.noUiSlider.on('update', () => {
       effectValue.value = effectSlider.noUiSlider.get();
-      imageUploadPreview.style.filter = `${effectSetups[effect.toUpperCase()].filter}(${effectValue.value + effectSetups[effect.toUpperCase()].unit})`;
+      imageUploadPreview.style.filter = `${EffectSetups[effect.toUpperCase()].filter}(${effectValue.value + EffectSetups[effect.toUpperCase()].unit})`;
     });
     effectRangeContainer.classList.remove('hidden');
   }

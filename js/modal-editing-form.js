@@ -13,6 +13,11 @@ import {
   destroySlider,
   changeEffectInputClick,
 } from './image-editing-effects.js';
+import {
+  sendData,
+  showSuccessMessageUpload,
+  showErrorMessageUpload,
+} from './api.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
 const uploadButton = imageUploadForm.querySelector('#upload-file');
@@ -25,6 +30,42 @@ const effectsList = imageUploadForm.querySelector('.effects__list');
 const checkedEffectInput = imageUploadForm.querySelector('.effects__radio[checked]');
 
 const body = document.querySelector('body');
+
+const submitButton = document.querySelector('.img-upload__submit');
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setUserFormSubmit = () => {
+  imageUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = validateUploadImageForm();
+    if (isValid) {
+      blockSubmitButton();
+      sendData(new FormData(evt.target))
+        .then(() => {
+          showSuccessMessageUpload();
+          closeUploadModalClickHandler();
+        })
+        .catch(() => {
+          showErrorMessageUpload();
+        })
+        .finally(unblockSubmitButton);
+    }
+  });
+};
 
 const onUploadImageFormSubmit = (evt) => {
   if (!validateUploadImageForm()) {
@@ -95,3 +136,5 @@ function closeUploadModalClickHandler() {
   removeListenersScaleValue();
   resetScaleValue();
 }
+
+export {setUserFormSubmit, closeUploadModalClickHandler};

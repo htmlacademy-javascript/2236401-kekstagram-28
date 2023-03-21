@@ -68,6 +68,7 @@ pristineValidateForm.addValidator(
   `Описание не должно превышать ${MAX_DESCRIPTION_LENGTH} символов`
 );
 
+
 const validateUploadImageForm = () => pristineValidateForm.validate();
 
 export {validateUploadImageForm};
