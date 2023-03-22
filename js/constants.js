@@ -163,6 +163,8 @@ const ErrorText = {
 const RANDOM_IMAGE_COUNT = 10;
 const TIMEOUT_DELAY = 500;
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 
 export {
   NAMES,
@@ -200,4 +202,5 @@ export {
   SubmitButtonText,
   RANDOM_IMAGE_COUNT,
   TIMEOUT_DELAY,
+  FILE_TYPES,
 };

@@ -9,6 +9,7 @@ import {
 import {
   DEFAULT_SCALE_VALUE,
   SubmitButtonText,
+  FILE_TYPES,
 } from './constants.js';
 import {
   createSlider,
@@ -102,10 +103,20 @@ function escCloseKeyHandler(evt) {
 function openUploadModalClickHandler() {
   imageUploadPreview.src = '';
   const fileImage = uploadButton.files[0];
-  imageUploadPreview.src = URL.createObjectURL(fileImage);
-  previewEffectsImages.forEach((image) => {
-    image.style.backgroundImage = `url(${URL.createObjectURL(fileImage)})`;
-  });
+  const fileName = fileImage.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imageUploadPreview.src = URL.createObjectURL(fileImage);
+    previewEffectsImages.forEach((image) => {
+      image.style.backgroundImage = `url(${URL.createObjectURL(fileImage)})`;
+    });
+  } else {
+    imageUploadPreview.alt = 'Неверный формат изображения';
+    imageUploadPreview.style.backgroundColor = 'grey';
+    previewEffectsImages.forEach((image) => {
+      image.style.backgroundImage = 'none';
+    });
+  }
   uploadOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   scaleControlValue.value = `${DEFAULT_SCALE_VALUE}%`;
