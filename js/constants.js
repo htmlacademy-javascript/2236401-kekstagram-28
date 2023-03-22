@@ -147,7 +147,7 @@ const SubmitButtonText = {
 
 const Route = {
   GET_DATA: '/data',
-  SEND_DATA: 'e/',
+  SEND_DATA: '/',
 };
 
 const Method = {
@@ -159,6 +159,9 @@ const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
+
+const RANDOM_IMAGE_COUNT = 10;
+const TIMEOUT_DELAY = 500;
 
 
 export {
@@ -195,4 +198,6 @@ export {
   Method,
   ErrorText,
   SubmitButtonText,
+  RANDOM_IMAGE_COUNT,
+  TIMEOUT_DELAY,
 };

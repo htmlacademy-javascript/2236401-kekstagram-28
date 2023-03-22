@@ -3,6 +3,7 @@ import {openBigPicture} from './full-size-picture.js';
 const pictureContainer = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const pictureListFragment = document.createDocumentFragment();
+const imageFiltersContainer = document.querySelector('.img-filters');
 
 const generatePicture = ({url, comments, likes, id}) => {
   const pictureElement = pictureTemplate.cloneNode(true);
@@ -25,6 +26,7 @@ const randomPicture = (pictures) => {
       openBigPicture(pictures[indexPicture]);
     }
   });
+  imageFiltersContainer.classList.remove('img-filters--inactive');
 };
 
 export {randomPicture};
