@@ -160,6 +160,9 @@ const ErrorText = {
   SEND_DATA: 'Не удалось отправить форму. Попробуйте ещё раз',
 };
 
+const RANDOM_IMAGE_COUNT = 10;
+const TIMEOUT_DELAY = 500;
+
 
 export {
   NAMES,
@@ -195,4 +198,6 @@ export {
   Method,
   ErrorText,
   SubmitButtonText,
+  RANDOM_IMAGE_COUNT,
+  TIMEOUT_DELAY,
 };
