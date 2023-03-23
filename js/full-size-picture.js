@@ -16,6 +16,40 @@ const commentsLoader = bigPictureContainer.querySelector('.comments-loader');
 const commentsSet = [];
 let numberOfComments = 0;
 
+
+const createComment = ({avatar, name, message}) => {
+  const newComment = commentItem.cloneNode(true);
+  newComment.querySelector('.social__picture').src = avatar;
+  newComment.querySelector('.social__picture').alt = name;
+  newComment.querySelector('.social__text').textContent = message;
+  numberOfComments++;
+
+  return newComment;
+};
+
+
+const closeBigPicture = () => {
+  bigPictureContainer.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.querySelector('.current-full-size').focus();
+  document.querySelector('.current-full-size').classList.remove('current-full-size');
+
+  commentsSet.length = 0;
+  numberOfComments = 0;
+  commentsLoader.classList.remove('hidden');
+  removeListeners();
+};
+
+const userComments = () => {
+  const commentsFragment = document.createDocumentFragment();
+  commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsFragment.append(createComment(item)));
+  commentsList.append(commentsFragment);
+  commentsContainer.innerHTML = `${numberOfComments} из <span class="comments-count"> ${commentsCount.textContent} </span> комментариев`;
+  if (!Number(commentsCount.textContent)) {
+    commentsContainer.innerHTML = 'Ваш комментарий будет первым';
+  }
+};
+
 const onCloseButtonClick = () => {
   closeBigPicture();
 };
@@ -47,31 +81,11 @@ const createListeners = () => {
   bigPictureContainer.addEventListener('click', onBackBigPictureClick);
 };
 
-const removeListeners = () => {
+function removeListeners () {
   pictureCloseButton.removeEventListener('click', onCloseButtonClick);
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsLoader.removeEventListener('click', onCommentsLoaderClick);
   bigPictureContainer.removeEventListener('click', onBackBigPictureClick);
-};
-
-const createComment = ({avatar, name, message}) => {
-  const newComment = commentItem.cloneNode(true);
-  newComment.querySelector('.social__picture').src = avatar;
-  newComment.querySelector('.social__picture').alt = name;
-  newComment.querySelector('.social__text').textContent = message;
-  numberOfComments++;
-
-  return newComment;
-};
-
-function userComments () {
-  const commentsFragment = document.createDocumentFragment();
-  commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsFragment.append(createComment(item)));
-  commentsList.append(commentsFragment);
-  commentsContainer.innerHTML = `${numberOfComments} из <span class="comments-count"> ${commentsCount.textContent} </span> комментариев`;
-  if (!Number(commentsCount.textContent)) {
-    commentsContainer.innerHTML = 'Ваш комментарий будет первым';
-  }
 }
 
 const fillBigPicture = ({url, likes, comments, description}) => {
@@ -84,9 +98,11 @@ const fillBigPicture = ({url, likes, comments, description}) => {
   }
 };
 
-function openBigPicture (data) {
+const openBigPicture = (data) => {
   pictureCloseButton.focus();
   commentsList.innerHTML = '';
+  commentsSet.length = 0;
+  numberOfComments = 0;
   commentsSet.push(...data.comments.slice());
   document.body.classList.add('modal-open');
 
@@ -94,18 +110,6 @@ function openBigPicture (data) {
   userComments();
   createListeners();
   bigPictureContainer.classList.remove('hidden');
-}
-
-function closeBigPicture () {
-  bigPictureContainer.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.querySelector('.current-full-size').focus();
-  document.querySelector('.current-full-size').classList.remove('current-full-size');
-
-  commentsSet.length = 0;
-  numberOfComments = 0;
-  commentsLoader.classList.remove('hidden');
-  removeListeners();
-}
+};
 
 export {openBigPicture};

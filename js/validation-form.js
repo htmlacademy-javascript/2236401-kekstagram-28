@@ -18,7 +18,7 @@ const pristineValidateForm = new Pristine(imageUploadForm, {
   errorTextClass: 'form__error',
 }, false);
 
-function validateDublicateHashtag (value) {
+const validateDublicateHashtag = (value) => {
   const valueArray = value
     .replaceAll(' ','')
     .toLowerCase()
@@ -27,7 +27,7 @@ function validateDublicateHashtag (value) {
   const uniqueHashtag = Array.from(new Set(valueArray));
 
   return valueArray.length === uniqueHashtag.length;
-}
+};
 
 pristineValidateForm.addValidator(
   hashtagsInputText,
@@ -35,9 +35,8 @@ pristineValidateForm.addValidator(
   'Введены дублирующиеся хэштеги'
 );
 
-function validateHashtagCount (value) {
-  return value.split(' ').length <= MAX_HASHTAG_COUNT;
-}
+const validateHashtagCount = (value) => value.split(' ').length <= MAX_HASHTAG_COUNT;
+
 
 pristineValidateForm.addValidator(
   hashtagsInputText,
@@ -45,12 +44,12 @@ pristineValidateForm.addValidator(
   `Максимальное число хэштегов - ${MAX_HASHTAG_COUNT}`
 );
 
-function validateHashtagText (value) {
+const validateHashtagText = (value) => {
   const arrHashtag = value.split(' ');
   const newArrHashtag = [];
   arrHashtag.forEach((item) => item ? newArrHashtag.push(item) : newArrHashtag);
   return value === '' ? true : !newArrHashtag.some((item) => HASHTAG_VALID_REGEX.test(item) === false);
-}
+};
 
 pristineValidateForm.addValidator(
   hashtagsInputText,
@@ -58,9 +57,7 @@ pristineValidateForm.addValidator(
   `Хэштег после октото́рпа # должен состоять из букв и чисел, не может быть меньше ${MIN_HASHTAG_LENGTH} и не должен превышать ${MAX_HASHTAG_LENGTH} символов`
 );
 
-function validateDescriptionLength (value) {
-  return value.length <= MAX_DESCRIPTION_LENGTH;
-}
+const validateDescriptionLength = (value) => value.length <= MAX_DESCRIPTION_LENGTH;
 
 pristineValidateForm.addValidator(
   descriptionText,
