@@ -1,35 +1,4 @@
-// Функции для поиска случайного числа из диапазона
-
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-const getRandomNumber = (min, max) => getRandomInteger(min, max);
-
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
-const isEnterKey = (evt) => evt.key === 'Enter';
-
 
 const ALERT_SHOW_TIME = 5000;
 const showAlert = (message) => {
@@ -66,19 +35,6 @@ const debounce = (callback, timeoutDelay) => {
 };
 
 
-const throttle = (callback, delayBetweenFrames) => {
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-};
-
-
 // Функция для сортировки по количеству комментариев
 
 const sortByComments = (a, b) => b.comments.length - a.comments.length;
@@ -95,15 +51,9 @@ const shuffle = (array) => {
 };
 
 export {
-  getRandomInteger,
-  createRandomIdFromRangeGenerator,
-  getRandomArrayElement,
-  getRandomNumber,
   isEscapeKey,
-  isEnterKey,
   showAlert,
   debounce,
-  throttle,
   sortByComments,
   shuffle,
 };

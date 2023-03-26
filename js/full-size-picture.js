@@ -40,7 +40,7 @@ const closeBigPicture = () => {
   removeListeners();
 };
 
-const userComments = () => {
+const showUserComments = () => {
   const commentsFragment = document.createDocumentFragment();
   commentsSet.splice(0, COMMENTS_STEP).forEach((item) => commentsFragment.append(createComment(item)));
   commentsList.append(commentsFragment);
@@ -50,24 +50,24 @@ const userComments = () => {
   }
 };
 
-const onCloseButtonClick = () => {
+const closeButtonClickHandler = () => {
   closeBigPicture();
 };
 
-const onBackBigPictureClick = (evt) => {
+const backBigPictureClickHandler = (evt) => {
   if (evt.target === bigPictureContainer) {
     closeBigPicture();
   }
 };
 
-const onDocumentKeydown = (evt) => {
+const escDocumentKeydownHandler = (evt) => {
   if (isEscapeKey(evt)) {
     closeBigPicture();
   }
 };
 
-const onCommentsLoaderClick = () => {
-  userComments();
+const loadsCommentsClickHandler = () => {
+  showUserComments();
 
   if (numberOfComments === Number(commentsCount.textContent)) {
     commentsLoader.classList.add('hidden');
@@ -75,17 +75,17 @@ const onCommentsLoaderClick = () => {
 };
 
 const createListeners = () => {
-  pictureCloseButton.addEventListener('click', onCloseButtonClick);
-  document.addEventListener('keydown', onDocumentKeydown);
-  commentsLoader.addEventListener('click', onCommentsLoaderClick);
-  bigPictureContainer.addEventListener('click', onBackBigPictureClick);
+  pictureCloseButton.addEventListener('click', closeButtonClickHandler);
+  document.addEventListener('keydown', escDocumentKeydownHandler);
+  commentsLoader.addEventListener('click', loadsCommentsClickHandler);
+  bigPictureContainer.addEventListener('click', backBigPictureClickHandler);
 };
 
 function removeListeners () {
-  pictureCloseButton.removeEventListener('click', onCloseButtonClick);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  commentsLoader.removeEventListener('click', onCommentsLoaderClick);
-  bigPictureContainer.removeEventListener('click', onBackBigPictureClick);
+  pictureCloseButton.removeEventListener('click', closeButtonClickHandler);
+  document.removeEventListener('keydown', escDocumentKeydownHandler);
+  commentsLoader.removeEventListener('click', loadsCommentsClickHandler);
+  bigPictureContainer.removeEventListener('click', backBigPictureClickHandler);
 }
 
 const fillBigPicture = ({url, likes, comments, description}) => {
@@ -99,17 +99,21 @@ const fillBigPicture = ({url, likes, comments, description}) => {
 };
 
 const openBigPicture = (data) => {
-  pictureCloseButton.focus();
-  commentsList.innerHTML = '';
-  commentsSet.length = 0;
-  numberOfComments = 0;
-  commentsSet.push(...data.comments.slice());
-  document.body.classList.add('modal-open');
+  if (data && typeof data === 'object') {
+    pictureCloseButton.focus();
+    commentsList.innerHTML = '';
+    commentsSet.length = 0;
+    numberOfComments = 0;
+    if (data.comments) {
+      commentsSet.push(...data.comments);
+    }
+    document.body.classList.add('modal-open');
 
-  fillBigPicture(data);
-  userComments();
-  createListeners();
-  bigPictureContainer.classList.remove('hidden');
+    fillBigPicture(data);
+    showUserComments();
+    createListeners();
+    bigPictureContainer.classList.remove('hidden');
+  }
 };
 
 export {openBigPicture};

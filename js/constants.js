@@ -79,7 +79,7 @@ const EffectSetups = {
 const BASE_URL = 'https://28.javascript.pages.academy/kekstagram';
 
 const SubmitButtonText = {
-  IDLE: 'Сохранить',
+  IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...'
 };
 

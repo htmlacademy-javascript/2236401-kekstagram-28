@@ -15,7 +15,7 @@ const showMessage = (message, button) => {
   document.removeEventListener('keydown', escCloseKeyHandler);
   const closeMessage = () => {
     message.remove();
-    document.removeEventListener('keydown', onMessageEscDown);
+    document.removeEventListener('keydown', escDownMessageHandler);
   };
 
   button.addEventListener('click', () => {
@@ -28,14 +28,14 @@ const showMessage = (message, button) => {
     }
   });
 
-  function onMessageEscDown(evt) {
+  function escDownMessageHandler(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       closeMessage();
       document.addEventListener('keydown', escCloseKeyHandler);
     }
   }
-  document.addEventListener('keydown', onMessageEscDown);
+  document.addEventListener('keydown', escDownMessageHandler);
 };
 
 const showSuccessMessageUpload = () => {

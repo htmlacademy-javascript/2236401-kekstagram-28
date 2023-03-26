@@ -15,7 +15,7 @@ import {
   createSlider,
   setupSlider,
   destroySlider,
-  changeEffectInputClick,
+  changeEffectInputClickHandler,
 } from './image-editing-effects.js';
 import {
   sendData,
@@ -37,14 +37,10 @@ const body = document.querySelector('body');
 
 const submitButton = document.querySelector('.img-upload__submit');
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-};
 
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
+const checkSubmitButton = (disabled = false) => {
+  submitButton.disabled = disabled;
+  submitButton.textContent = disabled ? SubmitButtonText.SENDING : SubmitButtonText.IDLE;
 };
 
 const setUserFormSubmit = () => {
@@ -53,7 +49,7 @@ const setUserFormSubmit = () => {
 
     const isValid = validateUploadImageForm();
     if (isValid) {
-      blockSubmitButton();
+      checkSubmitButton(true);
       sendData(new FormData(evt.target))
         .then(() => {
           showSuccessMessageUpload();
@@ -62,29 +58,29 @@ const setUserFormSubmit = () => {
         .catch(() => {
           showErrorMessageUpload();
         })
-        .finally(unblockSubmitButton);
+        .finally(checkSubmitButton);
     }
   });
 };
 
-const onUploadImageFormSubmit = (evt) => {
+const uploadImageFormSubmitHandler = (evt) => {
   if (!validateUploadImageForm()) {
     evt.preventDefault();
   }
 };
 
 const createListeners = () => {
-  imageUploadForm.addEventListener('submit', onUploadImageFormSubmit);
+  imageUploadForm.addEventListener('submit', uploadImageFormSubmitHandler);
   closeButton.addEventListener('click', closeUploadModalClickHandler);
   document.addEventListener('keydown', escCloseKeyHandler);
-  effectsList.addEventListener('change', changeEffectInputClick);
+  effectsList.addEventListener('change', changeEffectInputClickHandler);
 };
 
 const removeListeners = () => {
-  imageUploadForm.removeEventListener('submit', onUploadImageFormSubmit);
+  imageUploadForm.removeEventListener('submit', uploadImageFormSubmitHandler);
   closeButton.removeEventListener('click', closeUploadModalClickHandler);
   document.removeEventListener('keydown', escCloseKeyHandler);
-  effectsList.removeEventListener('change', changeEffectInputClick);
+  effectsList.removeEventListener('change', changeEffectInputClickHandler);
 };
 
 function escCloseKeyHandler(evt) {

@@ -14,7 +14,7 @@ const generatePicture = ({url, comments, likes, id}) => {
   return pictureElement;
 };
 
-const randomPicture = (pictures) => {
+const renderPicture = (pictures) => {
   pictures.forEach((photo) => pictureListFragment.append(generatePicture(photo)));
   pictureContainer.append(pictureListFragment);
   pictureContainer.addEventListener('click', (evt) => {
@@ -29,4 +29,4 @@ const randomPicture = (pictures) => {
   imageFiltersContainer.classList.remove('img-filters--inactive');
 };
 
-export {randomPicture};
+export {renderPicture};
