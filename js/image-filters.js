@@ -7,7 +7,7 @@ import {
   sortByComments,
   shuffle,
 } from './util.js';
-import {randomPicture} from './miniature.js';
+import {renderPicture} from './miniature.js';
 
 const imageFiltersForm = document.querySelector('.img-filters__form');
 const imageFilterButtonDefault = imageFiltersForm.querySelector('#filter-default');
@@ -37,7 +37,7 @@ const onFilterClick = (evt, photos) => {
   images.forEach((image) => {
     image.remove();
   });
-  randomPicture(getFilteredImages(photos));
+  renderPicture(getFilteredImages(photos));
 };
 
 const changeFilterEvent = (photos) => {

@@ -16,7 +16,7 @@ const pristineValidateForm = new Pristine(imageUploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextTag: 'p',
   errorTextClass: 'form__error',
-}, false);
+});
 
 const validateDublicateHashtag = (value) => {
   const valueArray = value
@@ -25,23 +25,29 @@ const validateDublicateHashtag = (value) => {
     .split('#');
   valueArray.shift();
   const uniqueHashtag = Array.from(new Set(valueArray));
-
   return valueArray.length === uniqueHashtag.length;
 };
 
 pristineValidateForm.addValidator(
   hashtagsInputText,
   validateDublicateHashtag,
-  'Введены дублирующиеся хэштеги'
+  'Введены дублирующиеся хэштеги',
+  3,
+  true
 );
 
-const validateHashtagCount = (value) => value.split(' ').length <= MAX_HASHTAG_COUNT;
-
+const validateHashtagCount = (value) => {
+  const newValue = value.replaceAll(' ','').split('#');
+  newValue.shift();
+  return newValue.length <= MAX_HASHTAG_COUNT;
+};
 
 pristineValidateForm.addValidator(
   hashtagsInputText,
   validateHashtagCount,
-  `Максимальное число хэштегов - ${MAX_HASHTAG_COUNT}`
+  `Максимальное число хэштегов - ${MAX_HASHTAG_COUNT}`,
+  2,
+  true
 );
 
 const validateHashtagText = (value) => {
@@ -54,7 +60,9 @@ const validateHashtagText = (value) => {
 pristineValidateForm.addValidator(
   hashtagsInputText,
   validateHashtagText,
-  `Хэштег после октото́рпа # должен состоять из букв и чисел, не может быть меньше ${MIN_HASHTAG_LENGTH} и не должен превышать ${MAX_HASHTAG_LENGTH} символов`
+  `Хэштег после октото́рпа # должен состоять из букв и чисел, не может быть меньше ${MIN_HASHTAG_LENGTH} и не должен превышать ${MAX_HASHTAG_LENGTH} символов`,
+  1,
+  true
 );
 
 const validateDescriptionLength = (value) => value.length <= MAX_DESCRIPTION_LENGTH;
@@ -62,7 +70,7 @@ const validateDescriptionLength = (value) => value.length <= MAX_DESCRIPTION_LEN
 pristineValidateForm.addValidator(
   descriptionText,
   validateDescriptionLength,
-  `Описание не должно превышать ${MAX_DESCRIPTION_LENGTH} символов`
+  `Описание не должно превышать ${MAX_DESCRIPTION_LENGTH} символов`,
 );
 
 

@@ -47,7 +47,7 @@ const setupSlider = (effect) => {
   }
 };
 
-const changeEffectInputClick = (evt) => {
+const changeEffectInputClickHandler = (evt) => {
   if (evt.target.closest('.effects__radio')) {
     imageUploadPreview.className = '';
     imageUploadPreview.classList.add(`effects__preview--${evt.target.value}`);
@@ -61,6 +61,6 @@ const destroySlider = () => effectSlider.noUiSlider.destroy();
 export {
   createSlider,
   setupSlider,
-  changeEffectInputClick,
+  changeEffectInputClickHandler,
   destroySlider,
 };
